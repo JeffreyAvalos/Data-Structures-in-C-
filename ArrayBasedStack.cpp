@@ -4,8 +4,7 @@ A stack is a data structure of ordered items that can be inserted or removed onl
 */
 #include <iostream>
 
-const int CAPACITY = 10; //Capacity of the stack
-
+const int CAPACITY = 7; //Capacity of the stack
 using namespace std;
 
 template <typename Element>
@@ -20,22 +19,37 @@ public:
 	ArrayStack();
 private:
 	int topPosition;
+	int size_Stack;
 	Element stack[CAPACITY];
 };
 //Initialize a stack with a top that does not exist.
 template <typename Element> ArrayStack<Element>::ArrayStack() {
 	topPosition = -1;
+	size_Stack = 0;
 }
 //Pop the element at the top of the stack.
 template <typename Element> Element ArrayStack<Element>::pop() {
+	size_Stack--;
+	if (isEmpty()) {
+		cout << "Stack Underflow";
+		exit;
+	}
 	return stack[topPosition--];
 }
 //Push an element into the top of the stack.
 template <typename Element> void ArrayStack<Element>::push(Element elem) {
+	if (size_Stack > CAPACITY) {
+		cout << "Stack Overflow!";
+		exit;
+	}
 	stack[++topPosition] = elem;
+	size_Stack++;
 }
 //Output the top of the stack without removing it.
 template <typename Element> void ArrayStack<Element>::peek() {
+	if (isEmpty()) {
+		cout << "Stack Underflow!";
+	}
 	cout << stack[topPosition];
 }
 //Return true if the stack is empty and false if the stack is not empty.
@@ -47,10 +61,7 @@ template <typename Element> bool ArrayStack<Element>::isEmpty() {
 }
 //Return the number of elements in the stack.
 template <typename Element> int ArrayStack<Element>::size() {
-	if (isEmpty)
-		return 0;
-	else
-		return ++topPosition;
+	return size_Stack;
 }
 int main() {
 	ArrayStack<char> stack;
@@ -61,12 +72,10 @@ int main() {
 		stack.push(aString[iteration]);
 		iteration++;
 	}
-	iteration = 0;
+		iteration = 0;
 	while (iteration < 5) {
 		cout << stack.pop();
 		iteration++;
 	}
-	
-		
 	return 0;
 }
